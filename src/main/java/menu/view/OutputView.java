@@ -8,7 +8,6 @@ public class OutputView {
     private static final String RESULT_MESSAGE = "메뉴 추천 결과입니다.";
     private static final String COMPLETE_RECOMMEND_MESSAGE = "\n추천을 완료했습니다.";
     private static final String DAY_OF_WEEK_MESSAGE = "[ 구분 | 월요일 | 화요일 | 수요일 | 목요일 | 금요일 ]";
-    private static final String CATEGORY_MESSAGE = "[ 카테고리 | 한식 | 한식 | 일식 | 중식 | 아시안 ]";
     private static final String RECOMMEND_MENU_FORMAT = "[ %s ]";
 
     public void startRecommendMenu() {
@@ -19,9 +18,15 @@ public class OutputView {
         System.out.println(RESULT_MESSAGE);
     }
 
-    public void printRecommendContent(List<String> menus) {
+    public void printDayOfMonth() {
         System.out.println(DAY_OF_WEEK_MESSAGE);
-        System.out.println(CATEGORY_MESSAGE);
+    }
+
+    public void printCategoriesContent(String categories) {
+        System.out.println(String.format(RECOMMEND_MENU_FORMAT, "카테고리 | " + categories));
+    }
+
+    public void printRecommendContent(List<String> menus) {
         menus.forEach(menu -> System.out.println(String.format(RECOMMEND_MENU_FORMAT, menu)));
     }
 

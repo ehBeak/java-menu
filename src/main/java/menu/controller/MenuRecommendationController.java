@@ -21,10 +21,10 @@ public class MenuRecommendationController {
         outputView.startRecommendMenu();
         List<String> coachNames = inputView.inputCoachName();
         Coaches coaches = getCoaches(coachNames);
-        List<String> recommendMenusToCoaches = coaches.recommendMenusToCoaches();
 
-        outputView.printResultMessage();
-        outputView.printRecommendContent(recommendMenusToCoaches);
+        outputView.printDayOfMonth();
+        outputView.printCategoriesContent(coaches.getCategoriesContent());
+        outputView.printRecommendContent(coaches.recommendMenusToCoaches());
         outputView.printCompleteRecommendMessage();
     }
 

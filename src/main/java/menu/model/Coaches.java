@@ -54,7 +54,7 @@ public class Coaches {
         long count = categories.stream()
                 .filter(category -> category.equals(recommendCategory))
                 .count();
-        return count <= 2;
+        return count < 2;
     }
 
     public String getCategoriesContent() {

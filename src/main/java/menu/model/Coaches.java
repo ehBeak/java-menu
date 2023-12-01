@@ -29,9 +29,12 @@ public class Coaches {
     }
 
     public List<String> recommendMenusToCoaches() {
-        return coaches.stream()
-                .map(coach -> coach.getRecommendMenus(categories))
-                .collect(Collectors.toList());
+        for (int i = 0; i < categories.size(); i++) {
+            for (int j = 0; j < coaches.size(); j++) {
+                coaches.get(j).addRecommendMenu(categories.get(i));
+            }
+        }
+        return coaches.stream().map(Coach::getRecommendMenuContents).collect(Collectors.toList());
     }
 
     private List<MenuCategory> createMenuCategories() {

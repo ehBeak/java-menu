@@ -15,12 +15,14 @@ public class Coach {
 
     private final String name;
     private final List<Menu> restrictedMenus;
+    private final List<Menu> recommendMenusOfCoach;
 
     public Coach(String name, List<Menu> restrictedMenus) {
         validateName(name);
         validateRestrictedMenusSize(restrictedMenus);
         this.name = name;
         this.restrictedMenus = restrictedMenus;
+        this.recommendMenusOfCoach = new ArrayList<>();
     }
 
     private void validateName(String name) {
@@ -35,21 +37,31 @@ public class Coach {
         }
     }
 
-    public String getRecommendMenus(List<MenuCategory> menuCategories) {
-        List<Menu> recommendMenus = new ArrayList<>();
-        menuCategories.forEach(menuCategory -> addValidRecommendMenu(recommendMenus, menuCategory));
-        return getRecommendMenuContents(recommendMenus);
-    }
+//    public String getRecommendMenus(List<MenuCategory> menuCategories) {
+//        List<Menu> recommendMenus = new ArrayList<>();
+//        menuCategories.forEach(menuCategory -> addValidRecommendMenu(recommendMenus, menuCategory));
+//        return getRecommendMenuContents(recommendMenus);
+//    }
 
-    private void addValidRecommendMenu(List<Menu> menus, MenuCategory menuCategory) {
-        int orderSize = menus.size();
-        while (menus.size() == orderSize) {
-            Menu recommendMenu = recommendMenuInCategory(menuCategory);
-            if (isValidRecommendMenu(menus, recommendMenu)) {
-                menus.add(recommendMenu);
+    public void addRecommendMenu(MenuCategory menuCategory) {
+        int orderSize = recommendMenusOfCoach.size();
+        Menu menu = recommendMenuInCategory(menuCategory);
+        while (recommendMenusOfCoach.size() == orderSize) {
+            if (isValidRecommendMenu(recommendMenusOfCoach, menu)) {
+                recommendMenusOfCoach.add(menu);
             }
         }
     }
+
+//    private void addValidRecommendMenu(List<Menu> menus, MenuCategory menuCategory) {
+//        int orderSize = menus.size();
+//        while (menus.size() == orderSize) {
+//            Menu recommendMenu = recommendMenuInCategory(menuCategory);
+//            if (isValidRecommendMenu(menus, recommendMenu)) {
+//                menus.add(recommendMenu);
+//            }
+//        }
+//    }
 
     private Menu recommendMenuInCategory(MenuCategory menuCategory) {
         return MenuCategory.getRandomMenuInCategory(menuCategory);
@@ -67,9 +79,9 @@ public class Coach {
         return !menus.contains(recommendMenu);
     }
 
-    private String getRecommendMenuContents(List<Menu> recommendMenus) {
+    public String getRecommendMenuContents() {
         List<String> recommendMenuFormat =
-                recommendMenus.stream().map(Menu::getName).collect(Collectors.toList());
+                recommendMenusOfCoach.stream().map(Menu::getName).collect(Collectors.toList());
         recommendMenuFormat.add(0, name);
         return String.join(" | ", recommendMenuFormat);
     }

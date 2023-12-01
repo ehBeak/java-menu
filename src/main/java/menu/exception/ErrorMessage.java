@@ -6,6 +6,7 @@ public enum ErrorMessage {
     COACH_NAME_LENGTH_NOT_ALLOWED("코치 이름은 최소 2글자, 최대 4글자까지 가능합니다."),
     COACH_SIZE_NOT_ALLOWED("코치는 최소 2명에서 최대 5명까지 입력 가능합니다."),
     RESTRICTED_MENU_COUNT_NOT_ALLOWED("못 먹는 음식의 개수는 2개 이하가 되어야합니다."),
+    INPUT_MENU_NOT_EXIST("입력한 메뉴가 존재하지 않습니다."),
     ERROR_MESSAGE("[ERROR]");
 
     ErrorMessage(String message) {

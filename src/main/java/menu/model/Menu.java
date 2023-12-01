@@ -1,5 +1,10 @@
 package menu.model;
 
+import static menu.exception.ErrorMessage.INPUT_MENU_NOT_EXIST;
+
+import java.util.Arrays;
+import menu.exception.ExceptionWithMessage;
+
 public enum Menu {
     // 일식
     GYUDON("규동"),
@@ -60,6 +65,17 @@ public enum Menu {
 
     Menu(String name) {
         this.name = name;
+    }
+
+    public boolean isSameName(String name) {
+        return this.name.equals(name);
+    }
+
+    public static Menu findMenu(String menuName) {
+        return Arrays.stream(Menu.values())
+                .filter(menus -> menus.isSameName(menuName))
+                .findAny()
+                .orElseThrow(() -> new ExceptionWithMessage(INPUT_MENU_NOT_EXIST.toString()));
     }
 }
 

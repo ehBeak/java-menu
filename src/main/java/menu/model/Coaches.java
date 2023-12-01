@@ -36,7 +36,7 @@ public class Coaches {
 
     private List<MenuCategory> createMenuCategories() {
         List<MenuCategory> menuCategories = new ArrayList<>();
-        while (menuCategories.size() <= 5) {
+        while (menuCategories.size() < 5) {
             MenuCategory menuCategory = randomCategory();
             if (isValidMenuCategory(menuCategories, menuCategory)) {
                 menuCategories.add(menuCategory);
@@ -55,5 +55,11 @@ public class Coaches {
                 .filter(category -> category.equals(recommendCategory))
                 .count();
         return count <= 2;
+    }
+
+    public String getCategoriesContent() {
+        List<String> categoriesFormat =
+                categories.stream().map(MenuCategory::getName).collect(Collectors.toList());
+        return String.join(" | ", categoriesFormat);
     }
 }

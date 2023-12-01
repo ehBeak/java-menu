@@ -22,6 +22,7 @@ public class MenuRecommendationController {
         List<String> coachNames = inputView.inputCoachName();
         Coaches coaches = getCoaches(coachNames);
 
+        outputView.printResultMessage();
         outputView.printDayOfMonth();
         outputView.printCategoriesContent(coaches.getCategoriesContent());
         outputView.printRecommendContent(coaches.recommendMenusToCoaches());

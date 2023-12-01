@@ -80,7 +80,7 @@ public class Coach {
 
     public String getRecommendMenusOfCoach() {
         List<String> recommendMenuFormat =
-                recommendMenus().stream().map(Enum::name).collect(Collectors.toList());
+                recommendMenus().stream().map(Menu::getName).collect(Collectors.toList());
         recommendMenuFormat.add(0, name);
         return String.join("|", recommendMenuFormat);
     }

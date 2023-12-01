@@ -77,6 +77,10 @@ public enum Menu {
                 .findAny()
                 .orElseThrow(() -> new ExceptionWithMessage(INPUT_MENU_NOT_EXIST.toString()));
     }
+
+    public String getName() {
+        return name;
+    }
 }
 
 

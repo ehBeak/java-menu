@@ -36,51 +36,40 @@ public class Coach {
         }
     }
 
-    public List<Menu> recommendMenus() {
+    public String getRecommendMenus(List<MenuCategory> menuCategories) {
         List<Menu> recommendMenus = new ArrayList<>();
         while (recommendMenus.size() <= 5) {
-            Menu recommendMenu = recommendMenu();
-            if (isValidRecommendMenu(recommendMenus, recommendMenu)) {
-                recommendMenus.add(recommendMenu);
-            }
+            menuCategories.forEach(menuCategory -> addValidRecommendMenu(recommendMenus, menuCategory));
         }
-        return recommendMenus;
+        return getRecommendMenuContents(recommendMenus);
     }
 
-    private Menu recommendMenu() {
-        int randomNumber = Randoms.pickNumberInRange(1, 5);
-        return MenuCategory.getRandomMenuInCategory(randomNumber);
+    private void addValidRecommendMenu(List<Menu> menus, MenuCategory menuCategory) {
+        Menu recommendMenu = recommendMenuInCategory(menuCategory);
+        if (isValidRecommendMenu(menus, recommendMenu)) {
+            menus.add(recommendMenu);
+        }
+    }
+
+    private Menu recommendMenuInCategory(MenuCategory menuCategory) {
+        return MenuCategory.getRandomMenuInCategory(menuCategory);
     }
 
     private Boolean isValidRecommendMenu(List<Menu> menus, Menu menu) {
-        return notRestrictedMenu(menu)
-                && notDuplicatedMenu(menus, menu)
-                && notExceedsCategoryDuplicates(menus, menu);
+        return notRestrictedMenu(menu) && notDuplicatedMenu(menus, menu);
     }
 
     private Boolean notRestrictedMenu(Menu menu) {
         return !restrictedMenus.contains(menu);
     }
 
-    private Boolean notExceedsCategoryDuplicates(List<Menu> menus, Menu recommendMenu) {
-        MenuCategory menuCategory = MenuCategory.findMenuCategory(recommendMenu);
-        long categoryCount = getDuplicatedCategoryCount(menus, menuCategory);
-        return categoryCount <= 2;
-    }
-
-    private long getDuplicatedCategoryCount(List<Menu> menus, MenuCategory menuCategory) {
-        return menus.stream()
-                .filter(menu -> MenuCategory.findMenuCategory(menu).equals(menuCategory))
-                .count();
-    }
-
     private Boolean notDuplicatedMenu(List<Menu> menus, Menu recommendMenu) {
         return !menus.contains(recommendMenu);
     }
 
-    public String getRecommendMenusOfCoach() {
+    private String getRecommendMenuContents(List<Menu> recommendMenus) {
         List<String> recommendMenuFormat =
-                recommendMenus().stream().map(Menu::getName).collect(Collectors.toList());
+                recommendMenus.stream().map(Menu::getName).collect(Collectors.toList());
         recommendMenuFormat.add(0, name);
         return String.join(" | ", recommendMenuFormat);
     }

@@ -39,24 +39,15 @@ public enum MenuCategory {
     private final int categoryNumber;
     private final List<Menu> menus;
 
-    public static Menu getRandomMenuInCategory(int number) {
-        MenuCategory menuCategory = Arrays.stream(MenuCategory.values())
-                .filter(category -> category.categoryNumber == number)
-                .findAny()
-                .orElse(NONE);
+    public static Menu getRandomMenuInCategory(MenuCategory menuCategory) {
         return menuCategory.menus.get(Randoms.pickNumberInRange(0, 8));
     }
 
-    public static MenuCategory findMenuCategory(Menu menu) {
+
+    public static MenuCategory findMenuCategory(int randomNumber) {
         return Arrays.stream(MenuCategory.values())
-                .filter(menus -> menus.hasMenuCategory(menu))
+                .filter(menus -> menus.categoryNumber == randomNumber)
                 .findAny()
                 .orElse(NONE);
     }
-
-    public boolean hasMenuCategory(Menu menuType) {
-        return menus.stream()
-                .anyMatch(menu -> menu == menuType);
-    }
-
 }

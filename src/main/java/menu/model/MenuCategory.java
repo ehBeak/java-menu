@@ -5,6 +5,7 @@ import static menu.model.Menu.*;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum MenuCategory {
 
@@ -42,7 +43,10 @@ public enum MenuCategory {
     private final String name;
 
     public static Menu getRandomMenuInCategory(MenuCategory menuCategory) {
-        return menuCategory.menus.get(Randoms.pickNumberInRange(0, 8));
+        List<String> menuNames =
+                menuCategory.menus.stream().map(Menu::getName).collect(Collectors.toList());
+        String menuName = Randoms.shuffle(menuNames).get(0);
+        return findMenu(menuName);
     }
 
 

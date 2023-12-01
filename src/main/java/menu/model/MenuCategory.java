@@ -44,7 +44,7 @@ public enum MenuCategory {
                 .filter(category -> category.categoryNumber == number)
                 .findAny()
                 .orElse(NONE);
-        return menuCategory.menus.get(Randoms.pickNumberInRange(1, 9));
+        return menuCategory.menus.get(Randoms.pickNumberInRange(0, 8));
     }
 
     public static MenuCategory findMenuCategory(Menu menu) {

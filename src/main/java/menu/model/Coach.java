@@ -3,6 +3,8 @@ package menu.model;
 import static menu.exception.ErrorMessage.COACH_NAME_LENGTH_NOT_ALLOWED;
 import static menu.exception.ErrorMessage.RESTRICTED_MENU_COUNT_NOT_ALLOWED;
 
+import camp.nextstep.edu.missionutils.Randoms;
+import java.util.ArrayList;
 import java.util.List;
 import menu.exception.ExceptionWithMessage;
 
@@ -32,4 +34,47 @@ public class Coach {
             throw new ExceptionWithMessage(RESTRICTED_MENU_COUNT_NOT_ALLOWED.toString());
         }
     }
+
+    public List<Menu> recommendMenus() {
+        List<Menu> recommendMenus = new ArrayList<>();
+        while (recommendMenus.size() <= 5) {
+            Menu recommendMenu = recommendMenu();
+            if (isValidRecommendMenu(recommendMenus, recommendMenu)) {
+                recommendMenus.add(recommendMenu);
+            }
+        }
+        return recommendMenus;
+    }
+
+    private Menu recommendMenu() {
+        int randomNumber = Randoms.pickNumberInRange(1, 5);
+        return MenuCategory.getRandomMenuInCategory(randomNumber);
+    }
+
+    private Boolean isValidRecommendMenu(List<Menu> menus, Menu menu) {
+        return notRestrictedMenu(menu)
+                && notDuplicatedMenu(menus, menu)
+                && notExceedsCategoryDuplicates(menus, menu);
+    }
+
+    private Boolean notRestrictedMenu(Menu menu) {
+        return !restrictedMenus.contains(menu);
+    }
+
+    private Boolean notExceedsCategoryDuplicates(List<Menu> menus, Menu recommendMenu) {
+        MenuCategory menuCategory = MenuCategory.findMenuCategory(recommendMenu);
+        long categoryCount = getDuplicatedCategoryCount(menus, menuCategory);
+        return categoryCount <= 2;
+    }
+
+    private long getDuplicatedCategoryCount(List<Menu> menus, MenuCategory menuCategory) {
+        return menus.stream()
+                .filter(menu -> MenuCategory.findMenuCategory(menu).equals(menuCategory))
+                .count();
+    }
+
+    private Boolean notDuplicatedMenu(List<Menu> menus, Menu recommendMenu) {
+        return !menus.contains(recommendMenu);
+    }
+
 }

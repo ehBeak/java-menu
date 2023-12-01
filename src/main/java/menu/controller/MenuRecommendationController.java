@@ -2,7 +2,6 @@ package menu.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import menu.factroy.CoachFactory;
 import menu.model.Coach;
 import menu.model.Coaches;
 import menu.view.InputView;
@@ -22,6 +21,11 @@ public class MenuRecommendationController {
         outputView.startRecommendMenu();
         List<String> coachNames = inputView.inputCoachName();
         Coaches coaches = getCoaches(coachNames);
+        List<String> recommendMenusToCoaches = coaches.recommendMenusToCoaches();
+
+        outputView.printResultMessage();
+        outputView.printRecommendContent(recommendMenusToCoaches);
+        outputView.printCompleteRecommendMessage();
     }
 
     private Coaches getCoaches(List<String> coachNames) {

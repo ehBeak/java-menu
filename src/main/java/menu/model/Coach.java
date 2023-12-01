@@ -6,6 +6,7 @@ import static menu.exception.ErrorMessage.RESTRICTED_MENU_COUNT_NOT_ALLOWED;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import menu.exception.ExceptionWithMessage;
 
 public class Coach {
@@ -13,8 +14,8 @@ public class Coach {
     private static final int NAME_MAX_LENGTH = 2;
     private static final int NAME_MIN_LENGTH = 4;
 
-    private String name;
-    private List<Menu> restrictedMenus;
+    private final String name;
+    private final List<Menu> restrictedMenus;
 
     public Coach(String name, List<Menu> restrictedMenus) {
         validateName(name);
@@ -77,4 +78,10 @@ public class Coach {
         return !menus.contains(recommendMenu);
     }
 
+    public String getRecommendMenusOfCoach() {
+        List<String> recommendMenuFormat =
+                recommendMenus().stream().map(Enum::name).collect(Collectors.toList());
+        recommendMenuFormat.add(0, name);
+        return String.join("|", recommendMenuFormat);
+    }
 }

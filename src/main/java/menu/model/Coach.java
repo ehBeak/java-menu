@@ -82,6 +82,6 @@ public class Coach {
         List<String> recommendMenuFormat =
                 recommendMenus().stream().map(Menu::getName).collect(Collectors.toList());
         recommendMenuFormat.add(0, name);
-        return String.join("|", recommendMenuFormat);
+        return String.join(" | ", recommendMenuFormat);
     }
 }

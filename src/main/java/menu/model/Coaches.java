@@ -60,6 +60,7 @@ public class Coaches {
     public String getCategoriesContent() {
         List<String> categoriesFormat =
                 categories.stream().map(MenuCategory::getName).collect(Collectors.toList());
+        categoriesFormat.add(0, "카테고리");
         return String.join(" | ", categoriesFormat);
     }
 }

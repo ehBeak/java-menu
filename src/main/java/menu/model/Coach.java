@@ -70,7 +70,7 @@ public class Coach {
     private String getRecommendMenuContents(List<Menu> recommendMenus) {
         List<String> recommendMenuFormat =
                 recommendMenus.stream().map(Menu::getName).collect(Collectors.toList());
-        recommendMenuFormat.add(0, name); // add no!
+        recommendMenuFormat.add(0, name);
         return String.join(" | ", recommendMenuFormat);
     }
 }

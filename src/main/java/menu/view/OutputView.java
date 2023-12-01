@@ -23,7 +23,7 @@ public class OutputView {
     }
 
     public void printCategoriesContent(String categories) {
-        System.out.println(String.format(RECOMMEND_MENU_FORMAT, "카테고리 | " + categories));
+        System.out.println(String.format(RECOMMEND_MENU_FORMAT, categories));
     }
 
     public void printRecommendContent(List<String> menus) {

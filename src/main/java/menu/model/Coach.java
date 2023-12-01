@@ -3,7 +3,6 @@ package menu.model;
 import static menu.exception.ErrorMessage.COACH_NAME_LENGTH_NOT_ALLOWED;
 import static menu.exception.ErrorMessage.RESTRICTED_MENU_COUNT_NOT_ALLOWED;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,16 +37,17 @@ public class Coach {
 
     public String getRecommendMenus(List<MenuCategory> menuCategories) {
         List<Menu> recommendMenus = new ArrayList<>();
-        while (recommendMenus.size() <= 5) {
-            menuCategories.forEach(menuCategory -> addValidRecommendMenu(recommendMenus, menuCategory));
-        }
+        menuCategories.forEach(menuCategory -> addValidRecommendMenu(recommendMenus, menuCategory));
         return getRecommendMenuContents(recommendMenus);
     }
 
     private void addValidRecommendMenu(List<Menu> menus, MenuCategory menuCategory) {
-        Menu recommendMenu = recommendMenuInCategory(menuCategory);
-        if (isValidRecommendMenu(menus, recommendMenu)) {
-            menus.add(recommendMenu);
+        int orderSize = menus.size();
+        while (menus.size() == orderSize) {
+            Menu recommendMenu = recommendMenuInCategory(menuCategory);
+            if (isValidRecommendMenu(menus, recommendMenu)) {
+                menus.add(recommendMenu);
+            }
         }
     }
 
@@ -70,7 +70,7 @@ public class Coach {
     private String getRecommendMenuContents(List<Menu> recommendMenus) {
         List<String> recommendMenuFormat =
                 recommendMenus.stream().map(Menu::getName).collect(Collectors.toList());
-        recommendMenuFormat.add(0, name);
+        recommendMenuFormat.add(0, name); // add no!
         return String.join(" | ", recommendMenuFormat);
     }
 }
